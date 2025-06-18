@@ -24,7 +24,8 @@
           class="col-lg-4 col-md-6 col-12 gallery-item"
         >
           <div class="image-container" @click="openModal(getCurrentImageIndex(index))">
-            <img :src="image.src" :alt="image.alt" class="img-fluid gallery-image" />
+            <img :src="image.src"
+            class="img-fluid gallery-image" />
             <div class="image-overlay"> <!-- лупа на изображение -->
               <i class="fas fa-search-plus"></i>
             </div>
@@ -68,7 +69,7 @@
         <button class="modal-close" @click="closeModal">
           <i class="fas fa-times"></i>
         </button>
-        <img :src="galleryImages[currentModalImage].src" :alt="galleryImages[currentModalImage].alt" class="modal-image" />
+        <img :src="galleryImages[currentModalImage].src" class="modal-image" />
         <div class="modal-nav">
           <button class="modal-nav-btn prev" @click="prevModalImage" :disabled="currentModalImage === 0">
             <i class="fas fa-chevron-left"></i>
@@ -144,21 +145,6 @@ export default {
     prevModalImage() {
       if (this.currentModalImage > 0) this.currentModalImage--;
     },
-    handleKeyDown(e) {
-      if (!this.modalOpen) return;
-      
-      switch(e.key) {
-        case 'Escape': this.closeModal(); break;
-        case 'ArrowLeft': this.prevModalImage(); break;
-        case 'ArrowRight': this.nextModalImage(); break;
-      }
-    }
   },
-  mounted() {
-    document.addEventListener('keydown', this.handleKeyDown);
-  },
-  beforeUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown);
-  }
 };
 </script>
