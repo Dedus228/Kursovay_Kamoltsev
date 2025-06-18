@@ -31,7 +31,7 @@
         <div class="additional-info">
           <div class="row">
             <div class="col-md-4">
-              <div class="info-card">
+              <div class="info-card animate-in">
                 <h4>Партнерства</h4>
                 <p>Мы являемся официальными партнерами ведущих технологических компаний</p>
                 <ul>
@@ -42,7 +42,7 @@
               </div>
             </div>
             <div class="col-md-4">
-              <div class="info-card">
+              <div class="info-card animate-in">
                 <h4>Соответствие стандартам</h4>
                 <p>Наша работа соответствует международным стандартам качества</p>
                 <ul>
@@ -53,7 +53,7 @@
               </div>
             </div>
             <div class="col-md-4">
-              <div class="info-card">
+              <div class="info-card animate-in">
                 <h4>Экспертиза команды</h4>
                 <p>Наши специалисты имеют подтвержденную квалификацию</p>
                 <ul>
@@ -73,25 +73,6 @@
 
 <script>
 export default {
-  name: 'AppCertifications',
-  mounted() {
-    this.observeElements();
-  },
-  methods: {
-    observeElements() {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in');
-          }
-        });
-      }, {
-        threshold: 0.1
-      });
-      document.querySelectorAll('.certification-item, .info-card').forEach(el => {
-        observer.observe(el);
-      });
-    }
-  }
+  name: 'AppCertifications'
 };
 </script>
