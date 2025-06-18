@@ -16,22 +16,23 @@
         </div>
       </div>
       
+      <!-- Сетка изображений -->
       <div class="row gallery-grid">
         <div 
           v-for="(image, index) in currentPageImages" 
           :key="index"
-          :class="getImageClass(index)"
-          class="gallery-item"
+          class="col-lg-4 col-md-6 col-12 gallery-item"
         >
           <div class="image-container" @click="openModal(getCurrentImageIndex(index))">
             <img :src="image.src" :alt="image.alt" class="img-fluid gallery-image" />
-            <div class="image-overlay">
+            <div class="image-overlay"> <!-- лупа на изображение -->
               <i class="fas fa-search-plus"></i>
             </div>
           </div>
         </div>
       </div>
       
+      <!-- Пагинация -->
       <div class="row mt-5">
         <div class="col-12">
           <div class="pagination-container">
@@ -61,6 +62,7 @@
       </div>
     </div>
     
+    <!-- Модальное окно -->
     <div v-if="modalOpen" class="modal-overlay" @click="closeModal">
       <div class="modal-content" @click.stop>
         <button class="modal-close" @click="closeModal">
@@ -93,55 +95,18 @@ export default {
       modalOpen: false,
       currentModalImage: 0,
       galleryImages: [
-        {
-          src: require('@/assets/g1.jpg'),
-          alt: 'Modern Architecture 1'
-        },
-        {
-          src: require('@/assets/g2.jpg'),
-          alt: 'Modern Architecture 2'
-        },
-        {
-          src: require('@/assets/g3.jpg'),
-          alt: 'Project Architecture 1'
-        },
-        {
-          src: require('@/assets/g4.jpg'),
-          alt: 'Project Architecture 2'
-        },
-        
-        {
-          src: require('@/assets/our1.jpg'),
-          alt: 'Contemporary Building'
-        },
-        {
-          src: require('@/assets/our2.jpg'),
-          alt: 'Urban Architecture'
-        },
-        {
-          src: require('@/assets/our3.jpg'),
-          alt: 'Commercial Project'
-        },
-        {
-          src: require('@/assets/project2.jpg'),
-          alt: 'Residential Design'
-        },
-        {
-          src: require('@/assets/project3.jpg'),
-          alt: 'Architectural Detail'
-        },
-        {
-          src: require('@/assets/project1.jpg'),
-          alt: 'Interior Space'
-        },
-        {
-          src: require('@/assets/skyline.jpg'),
-          alt: 'Structural Design'
-        },
-        {
-          src: require('@/assets/horizon.jpg'),
-          alt: 'Modern Facade'
-        }
+        { src: require('@/assets/g1.jpg'), alt: 'Modern Architecture 1' },
+        { src: require('@/assets/g2.jpg'), alt: 'Modern Architecture 2' },
+        { src: require('@/assets/g3.jpg'), alt: 'Project Architecture 1' },
+        { src: require('@/assets/g4.jpg'), alt: 'Project Architecture 2' },
+        { src: require('@/assets/our1.jpg'), alt: 'Contemporary Building' },
+        { src: require('@/assets/our2.jpg'), alt: 'Urban Architecture' },
+        { src: require('@/assets/our3.jpg'), alt: 'Commercial Project' },
+        { src: require('@/assets/project2.jpg'), alt: 'Residential Design' },
+        { src: require('@/assets/project3.jpg'), alt: 'Architectural Detail' },
+        { src: require('@/assets/project1.jpg'), alt: 'Interior Space' },
+        { src: require('@/assets/skyline.jpg'), alt: 'Structural Design' },
+        { src: require('@/assets/horizon.jpg'), alt: 'Modern Facade' }
       ]
     };
   },
@@ -151,34 +116,18 @@ export default {
     },
     currentPageImages() {
       const start = (this.currentPage - 1) * this.imagesPerPage;
-      const end = start + this.imagesPerPage;
-      return this.galleryImages.slice(start, end);
+      return this.galleryImages.slice(start, start + this.imagesPerPage);
     }
   },
   methods: {
-    getImageClass(index) {
-      const patterns = [
-        'col-lg-4 col-md-6 col-12', 
-        'col-lg-4 col-md-6 col-12', 
-        'col-lg-4 col-md-6 col-12', 
-        'col-lg-4 col-md-6 col-12', 
-        'col-lg-4 col-md-6 col-12', 
-        'col-lg-4 col-md-6 col-12',    
-      ];
-      return patterns[index % patterns.length];
-    },
     getCurrentImageIndex(pageIndex) {
       return (this.currentPage - 1) * this.imagesPerPage + pageIndex;
     },
     nextPage() {
-      if (this.currentPage < this.totalPages) {
-        this.currentPage += 1;
-      }
+      if (this.currentPage < this.totalPages) this.currentPage++;
     },
     prevPage() {
-      if (this.currentPage > 1) {
-        this.currentPage -= 1;
-      }
+      if (this.currentPage > 1) this.currentPage--;
     },
     openModal(imageIndex) {
       this.currentModalImage = imageIndex;
@@ -190,30 +139,26 @@ export default {
       document.body.style.overflow = 'auto';
     },
     nextModalImage() {
-      if (this.currentModalImage < this.galleryImages.length - 1) {
-        this.currentModalImage += 1;
-      }
+      if (this.currentModalImage < this.galleryImages.length - 1) this.currentModalImage++;
     },
     prevModalImage() {
-      if (this.currentModalImage > 0) {
-        this.currentModalImage -= 1;
+      if (this.currentModalImage > 0) this.currentModalImage--;
+    },
+    handleKeyDown(e) {
+      if (!this.modalOpen) return;
+      
+      switch(e.key) {
+        case 'Escape': this.closeModal(); break;
+        case 'ArrowLeft': this.prevModalImage(); break;
+        case 'ArrowRight': this.nextModalImage(); break;
       }
     }
   },
   mounted() {
-    // Добавляем обработчик клавиш для модального окна
-    document.addEventListener('keydown', (e) => {
-      if (this.modalOpen) {
-        if (e.key === 'Escape') {
-          this.closeModal();
-        } else if (e.key === 'ArrowLeft') {
-          this.prevModalImage();
-        } else if (e.key === 'ArrowRight') {
-          this.nextModalImage();
-        }
-      }
-    });
+    document.addEventListener('keydown', this.handleKeyDown);
+  },
+  beforeUnmount() {
+    document.removeEventListener('keydown', this.handleKeyDown);
   }
 };
 </script>
-
