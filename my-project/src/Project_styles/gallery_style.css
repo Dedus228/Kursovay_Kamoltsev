@@ -1,0 +1,269 @@
+main {
+  margin-top: 90px;
+  min-height: calc(100vh - 250px);
+  padding: 40px 0 100px;
+}
+
+.gallery-header {
+  text-align: left;
+  margin-bottom: 60px;
+  
+  .gallery-title {
+    font-size: 4rem;
+    line-height: 1.1;
+    margin: 0;
+    
+    .title-light {
+      color: #ccc;
+      font-weight: 300;
+    }
+    
+    .title-bold {
+      color: #000;
+      font-weight: 700;
+    }
+  }
+}
+
+.gallery-grid {
+  margin-bottom: 40px;
+}
+
+.gallery-item {
+  margin-bottom: 30px;
+  
+  .image-container {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 4px;
+    
+    .gallery-image {
+      width: 100%;
+      height: 280px; 
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    
+    .image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      
+      i {
+        color: white;
+        font-size: 2rem;
+      }
+    }
+    
+    &:hover {
+      .gallery-image {
+        transform: scale(1.05);
+      }
+      
+      .image-overlay {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  
+  .pagination-info {
+    font-size: 1.5rem;
+    color: #333;
+    display: flex;
+    align-items: center;
+    
+    .current-page {
+      font-weight: 700;
+    }
+    
+    .separator {
+      color: #999;
+      margin: 0 8px;
+      font-weight: 400;
+    }
+    
+    .total-pages {
+      color: #999;
+      font-weight: 400;
+    }
+  }
+  
+  .pagination-controls {
+    display: flex;
+    gap: 20px;
+    
+    .nav-btn {
+      width: 50px;
+      height: 50px;
+      border: 1px solid #333;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      
+      &:hover:not(:disabled) {
+        background: #333;
+        color: white;
+      }
+      
+      &:disabled {
+        border-color: #ccc;
+        color: #ccc;
+        cursor: not-allowed;
+      }
+      
+      i {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.modal-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  
+  .modal-close {
+    position: absolute;
+    top: -50px;
+    right: 0;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 2001;
+    
+    &:hover {
+      color: #ccc;
+    }
+  }
+  
+  .modal-image {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+  }
+  
+  .modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    pointer-events: none;
+    
+    .modal-nav-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+      pointer-events: all;
+      
+      &:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.4);
+      }
+      
+      &:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+      
+      i {
+        font-size: 1.2rem;
+      }
+    }
+  }
+  
+  .modal-counter {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery-header {
+    text-align: center;
+    margin-bottom: 40px;
+    
+    .gallery-title {
+      font-size: 2.5rem;
+    }
+  }
+  
+  .pagination-container {
+    flex-direction: column;
+    gap: 30px;
+    
+    .pagination-controls {
+      .nav-btn {
+        width: 45px;
+        height: 45px;
+      }
+    }
+  }
+  
+  .gallery-item .image-container .gallery-image {
+    height: 200px !important;
+  }
+  
+  .modal-content {
+    .modal-nav {
+      .modal-nav-btn {
+        width: 40px;
+        height: 40px;
+        
+        i {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}
