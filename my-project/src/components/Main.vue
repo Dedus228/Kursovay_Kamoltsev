@@ -282,7 +282,6 @@ export default {
         email: this.formData.email.trim(),
         interestedIn: this.formData.interestedIn.trim(),
         message: this.formData.message.trim(),
-        timestamp: new Date().toISOString()
       };
       
       // Выводим данные в консоль в формате JSON
