@@ -38,7 +38,8 @@
           <div class="col-lg-6">
             <div class="hero-image-container">
               <div class="hero-image">
-                <img :src="slides[currentSlide - 1].image" :alt="slides[currentSlide - 1].alt" class="img-fluid" />
+                <img :src="slides[currentSlide - 1].image" 
+                class="img-fluid" />
               </div>
             </div>
           </div>
@@ -290,15 +291,6 @@ export default {
       // Также  обычный объект для удобства отладки
       console.log('Form Object:', formDataToSend);
     },
-    resetForm() {
-      this.formData = {
-        name: '',
-        phone: '',
-        email: '',
-        interestedIn: '',
-        message: ''
-      };
-    }
   }
 };
 </script>
